@@ -1,0 +1,28 @@
+apply plugin: 'java'
+
+configurations { jaxws }
+
+repositories { jcenter() }
+
+dependencies {
+    jaxws 'com.sun.xml.ws:jaxws-tools:2.2.10'
+}
+
+task wsimport {
+    description = 'Generates JAX-WS classes from WSDL.'
+    ext.destDir = file("${buildDir}/generated")
+    doLast {
+        ant {
+	  sourceSets.main.output.classesDir.mkdirs()  
+	  destDir.mkdirs()
+	  taskdef(name:'wsimport',
+		  classname:'com.sun.tools.ws.ant.WsImport',
+		  classpath:configurations.jaxws.asPath)
+	  wsimport(keep:true,
+		   destdir: sourceSets.main.output.classesDir,
+		   sourcedestdir: destDir,
+		   wsdl:'http://wsf.cdyne.com/WeatherWS/Weather.asmx?WSDL')
+        }
+    }
+}
+compileJava.dependsOn(wsimport)
