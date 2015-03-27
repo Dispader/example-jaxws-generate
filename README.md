@@ -22,3 +22,4 @@ A simple project testing JAX-WS's `wsimport`.
   * `Select root directory` -> `Browse` -> <project directory>
   * `Finish`
 
+[![Analytics](https://ga-beacon.appspot.com/UA-61184208-1/chromeskel_a/readme)](https://github.com/igrigorik/ga-beacon)
