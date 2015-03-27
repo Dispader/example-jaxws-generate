@@ -1,5 +1,5 @@
 apply plugin: 'eclipse'
-apply plugin: 'java'
+apply plugin: 'groovy'
 
 task wrapper(type: Wrapper) {
     description = 'Generates Gradle Wrapper files.'
@@ -13,8 +13,15 @@ configurations { jaxws }
 
 repositories { jcenter() }
 
+sourceSets {
+    main {
+        java { srcDir "$buildDir/generated" }
+    }
+}
+
 dependencies {
     jaxws 'com.sun.xml.ws:jaxws-tools:2.2.10'
+    testCompile 'org.spockframework:spock-core:1.0-groovy-2.4'
 }
 
 task wsimport {
@@ -22,15 +29,15 @@ task wsimport {
     ext.destDir = file("${buildDir}/generated")
     doLast {
         ant {
-	  sourceSets.main.output.classesDir.mkdirs()  
-	  destDir.mkdirs()
-	  taskdef(name:'wsimport',
-		  classname:'com.sun.tools.ws.ant.WsImport',
-		  classpath:configurations.jaxws.asPath)
-	  wsimport(keep:true,
-		   destdir: sourceSets.main.output.classesDir,
-		   sourcedestdir: destDir,
-		   wsdl:'http://wsf.cdyne.com/WeatherWS/Weather.asmx?WSDL')
+        sourceSets.main.output.classesDir.mkdirs()  
+        destDir.mkdirs()
+        taskdef(name:'wsimport',
+                classname:'com.sun.tools.ws.ant.WsImport',
+                classpath:configurations.jaxws.asPath)
+        wsimport(keep:true,
+                 destdir: sourceSets.main.output.classesDir,
+                 sourcedestdir: destDir,
+                 wsdl:'http://wsf.cdyne.com/WeatherWS/Weather.asmx?WSDL')
         }
     }
 }
