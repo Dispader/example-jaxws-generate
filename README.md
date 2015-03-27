@@ -4,6 +4,8 @@ A simple project testing JAX-WS's `wsimport`.
 
 ## usage
 
+* `git clone git@github.com:Dispader/example-jaxws-generate.git`
+* `cd example-jaxws-generate/`
 * `./gradlew test`
 
 ## Eclipse integration
