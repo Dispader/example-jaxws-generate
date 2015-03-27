@@ -1,4 +1,8 @@
+apply plugin: 'eclipse'
 apply plugin: 'java'
+
+eclipse.classpath.downloadSources = true
+eclipse.classpath.downloadJavadoc = true
 
 configurations { jaxws }
 
